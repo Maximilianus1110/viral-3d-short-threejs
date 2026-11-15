@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virale 3D-Kurzvideos per Code (Three.js + Claude Pro Abo) — 60 FPS Studio</title>
+  <meta name="description" content="Animiertes 9:16 3D-Kurzvideo erstellt mit HTML, Three.js, WebGL 2.0, Python TTS und FFmpeg — inklusive Claude Pro 5-Stunden-Fenster Abo-Kalkulation." />
+  <link rel="stylesheet" href="./index.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./node_modules/three/build/three.module.js",
+        "three/addons/": "./node_modules/three/examples/jsm/"
+      }
+    }
+  </script>
+  <script src="./assets/timeline.js"></script>
+</head>
+<body class="studio-mode">
+  <!-- 9:16 VERTICAL 1080x1920 MASTER VIDEO STAGE -->
+  <main id="video-stage" aria-label="9:16 3D Kurzvideo Bühne">
+    <canvas id="webgl-canvas" width="1080" height="1920"></canvas>
+    <div class="stage-vignette"></div>
+
+    <!-- TOP TELEMETRY & STYLE MODE HUD -->
+    <header class="hud-top" id="hud-top-bar">
+      <div class="hud-brand-block">
+        <span class="hud-scene-kicker" id="hud-scene-kicker">SZENE 01 / 06 · CODE-TO-VIDEO</span>
+        <span class="hud-style-title" id="hud-style-title">STIL 1 · 3D STORYTELLING WORLD</span>
+      </div>
+      <div class="hud-right-telemetry">
+        <span class="hud-timecode" id="hud-timecode">00:00.00 · 60 FPS</span>
+        <div class="hud-eq-bars" id="hud-eq-bars">
+          <div class="hud-eq-bar"></div>
+          <div class="hud-eq-bar"></div>
+          <div class="hud-eq-bar"></div>
+          <div class="hud-eq-bar"></div>
+          <div class="hud-eq-bar"></div>
+          <div class="hud-eq-bar"></div>
+          <div class="hud-eq-bar"></div>
+          <div class="hud-eq-bar"></div>
+          <div class="hud-eq-bar"></div>
+          <div class="hud-eq-bar"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- DYNAMIC SCENE INFOGRAPHIC & CODE TELEMETRY OVERLAY -->
+    <section class="scene-overlay-container" id="scene-overlay" aria-live="polite">
+      <!-- Dynamically populated per scene by scene3d.js -->
+    </section>
+
+    <!-- VIRAL WORD-BY-WORD ANIMATED CAPTIONS -->
+    <section class="captions-zone" id="captions-zone">
+      <div class="caption-card" id="caption-card">
+        <div class="caption-words-wrap" id="caption-words-wrap"></div>
+      </div>
+    </section>
+
+    <!-- 6-SCENE SEGMENTED PROGRESS BAR -->
+    <footer class="hud-bottom-progress" id="hud-bottom-progress">
+      <div class="scene-prog-segment"><div class="scene-prog-fill" id="prog-seg-1"></div></div>
+      <div class="scene-prog-segment"><div class="scene-prog-fill" id="prog-seg-2"></div></div>
+      <div class="scene-prog-segment"><div class="scene-prog-fill" id="prog-seg-3"></div></div>
+      <div class="scene-prog-segment"><div class="scene-prog-fill" id="prog-seg-4"></div></div>
+      <div class="scene-prog-segment"><div class="scene-prog-fill" id="prog-seg-5"></div></div>
+      <div class="scene-prog-segment"><div class="scene-prog-fill" id="prog-seg-6"></div></div>
+    </footer>
+  </main>
+
+  <!-- INTERACTIVE STUDIO SIDEBAR (Hidden automatically in ?render=1 headless mode) -->
+  <aside id="studio-sidebar">
+    <h1 class="studio-title" id="studio-main-heading">3D Viral Shorts Studio</h1>
+    <p class="studio-desc">
+      Echtzeit-Three.js WebGL 2.0 Szene (1080×1920 @ 60 FPS) kombiniert alle 3 viralen Stile und die Claude Pro Abo-Kalkulation.
+    </p>
+
+    <div class="studio-controls-row">
+      <button class="btn-primary" id="btn-play-pause" type="button">▶ Abspielen (mit Audio)</button>
+      <span class="hud-timecode" id="studio-time-readout">0.00s / 59.38s</span>
+    </div>
+
+    <input
+      type="range"
+      id="timeline-scrubber"
+      class="scrubber-input"
+      min="0"
+      max="59.38"
+      step="0.016"
+      value="0"
+      aria-label="Video-Zeitachse"
+    />
+
+    <div class="scene-jump-grid" id="scene-jump-grid">
+      <button type="button" class="scene-btn active" id="jump-scene-1" data-time="0.0">1. Hook (3D Storytelling)</button>
+      <button type="button" class="scene-btn" id="jump-scene-2" data-time="7.30">2. Prompt → Three.js (Kinetic)</button>
+      <button type="button" class="scene-btn" id="jump-scene-3" data-time="19.50">3. Audio & 60 FPS Render</button>
+      <button type="button" class="scene-btn" id="jump-scene-4" data-time="30.41">4. Claude Pro 5h-Fenster</button>
+      <button type="button" class="scene-btn" id="jump-scene-5" data-time="44.55">5. 400 Videos / 5 Cent</button>
+      <button type="button" class="scene-btn" id="jump-scene-6" data-time="53.04">6. Finale & Loop</button>
+    </div>
+
+    <div class="studio-controls-row" style="margin-top: 6px;">
+      <a
+        href="./output/claude_3d_viral_short_1080x1920_60fps.mp4"
+        download="claude_3d_viral_short_1080x1920_60fps.mp4"
+        class="btn-primary"
+        id="btn-download-mp4"
+        style="text-decoration: none; text-align: center; width: 100%;"
+      >⬇ Fertiges MP4 herunterladen (1080×1920 · 60 FPS)</a>
+    </div>
+
+    <audio id="master-audio-el" src="./assets/master_audio.wav" preload="auto"></audio>
+  </aside>
+
+  <script type="module" src="./scene3d.js"></script>
+</body>
+</html>
